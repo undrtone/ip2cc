@@ -26,15 +26,9 @@ var ipList = [];
 
 function loadData() {
 	csv()
-	.from.path(path.join(__dirname, CSVFILENAME)).transform(function(data) {
-		if (data[0][0] != '#') {
-			return data;
-		} else {
-			return null;
-		}
-	})
-	.on('data', function(data, index) {
-		if (data[4] != 'ZZ') {
+	.from(path.join(__dirname, CSVFILENAME))
+	.on('record', function(data, index) {
+		if (data[4] != 'ZZ' && data[0].substr(0, 1) != '#') {
 			var entry = {
 				start: 	parseInt(data[0], 10),
 				end: 	parseInt(data[1], 10),
